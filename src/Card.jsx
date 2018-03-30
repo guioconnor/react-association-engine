@@ -5,8 +5,8 @@ const Card = styled.div`
   background: #ccc;
   display: inline-block;
   padding: 15px 30px;
-  margin: 10px 30px;
   font-size: 30px;
+  margin: 10px 30px;
 `;
 
 export default Card;

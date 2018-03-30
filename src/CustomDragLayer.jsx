@@ -2,7 +2,9 @@ import React, { Component } from "react";
 import PropTypes from "prop-types";
 import { DragLayer } from "react-dnd";
 import { get } from "lodash";
-import ItemTypes from "../itemTypes";
+
+import ItemTypes from "./itemTypes";
+import Card from "./Card";
 
 const layerStyles = {
   position: "fixed",
@@ -32,14 +34,14 @@ function getItemStyles(props) {
 }
 
 const boxStyle = {
-  display: "inline-block",
-  height: "50px",
-  background: "#ccc",
-  opacity: ".8",
   borderRadius: "5px",
+  background: "#ccc",
+  display: "inline-block",
+  padding: "15px 30px 0 30px",
   fontSize: "30px",
-  lineHeight: "1",
-  padding: "15px 30px 0 30px"
+  height: "50px",
+  opacity: ".8",
+  lineHeight: "1"
 };
 
 const CustomElement = props => {
@@ -47,6 +49,7 @@ const CustomElement = props => {
     <div style={layerStyles}>
       <div style={getItemStyles(props)}>
         <div style={boxStyle}>{get(props, "item.value", "")}</div>
+        {/* <Card>{get(props, "item.value", "")}</Card> */}
       </div>
     </div>
   );

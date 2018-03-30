@@ -3,7 +3,7 @@ import React, { Component } from "react";
 import DraggableResult from "./Result";
 import TargetExpression from "./Expression";
 import Board from "./Board";
-import CustomDragLayer from "./CustomDragLayer/index.js";
+import CustomDragLayer from "./CustomDragLayer";
 
 const Game = () => (
   <Board>
