@@ -25,7 +25,8 @@ class Expression extends Component {
           }}
         >
           {children}
-          {this.state.found && ` = ${value}`}
+          {` = `}
+          {this.state.found && `${value}`}
         </Card>
       </div>
     );
