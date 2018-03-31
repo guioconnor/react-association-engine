@@ -23,19 +23,19 @@ const ResultSection = styled.div`
 const Game = () => (
   <Board>
     <TargetSection>
-      <TargetExpression value={4}>2 + 2</TargetExpression>
-      <TargetExpression value={8}>5 + 3</TargetExpression>
-      <TargetExpression value={11}>5 + 6</TargetExpression>
-      <TargetExpression value={5}>3 + 2</TargetExpression>
-      <TargetExpression value={6}>2 + 4</TargetExpression>
-      <TargetExpression value={7}>4 + 3</TargetExpression>
+      <TargetExpression value={4}>3 + 1</TargetExpression>
+      <TargetExpression value={8}>4 + 4</TargetExpression>
+      <TargetExpression value={9}>3 + 6</TargetExpression>
+      <TargetExpression value={5}>1 + 4</TargetExpression>
+      <TargetExpression value={6}>5 + 1</TargetExpression>
+      <TargetExpression value={7}>2 + 5</TargetExpression>
     </TargetSection>
     <ResultSection>
-      <DraggableResult value={5} />
-      <DraggableResult value={8} />
       <DraggableResult value={6} />
-      <DraggableResult value={11} />
       <DraggableResult value={7} />
+      <DraggableResult value={8} />
+      <DraggableResult value={9} />
+      <DraggableResult value={5} />
       <DraggableResult value={4} />
     </ResultSection>
     <CustomDragLayer snapToGrid={false} />
