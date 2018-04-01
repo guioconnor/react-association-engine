@@ -37,6 +37,10 @@ const expressionTarget = {
   drop(props, monitor, component) {
     const item = monitor.getItem();
     if (!component.state.found) {
+      const found = item.value === props.value;
+      if (found) {
+        props.resolveRound(found);
+      }
       component.setState({
         found: item.value === props.value,
         tried: true
