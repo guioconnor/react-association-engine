@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import styled from "styled-components";
-import { random, range } from "lodash";
+import { random, range, shuffle, slice } from "lodash";
 
 import Result from "./Result";
 import Expression from "./Expression";
@@ -10,29 +10,54 @@ import WellDone from "./WellDone";
 
 /** Game constants */
 const ROUNDS_COUNT = 12;
+const TIMEOUT = 1200;
+const MIN_RESULTS_COUNT = 6;
+const LEVELS = [
+  {
+    showIcons: true,
+    showValue: false,
+    allowZero: false,
+    maxValue: 10
+  },
+  {
+    showIcons: true,
+    showValue: true,
+    allowZero: false,
+    maxValue: 10
+  },
+  {
+    showIcons: true,
+    showValue: true,
+    allowZero: true,
+    maxValue: 10
+  },
+  {
+    showIcons: false,
+    showValue: true,
+    allowZero: true,
+    maxValue: 10
+  }
+];
 
 const TargetSection = styled.div`
   display: flex;
   flex-direction: column;
   min-width: 200px;
-  margin: auto;
-  padding: 10px 0;
 `;
 
 const ResultSection = styled.div`
-  border-top: 1px solid #ccc;
   display: flex;
   justify-content: center;
   flex-wrap: wrap;
 `;
 
-const generateAdditionExpression = (lowest, highest) => {
-  const result = random(lowest, highest);
-  const firstOperand = random(lowest - 1, result - 1);
-  const secondOperand = result - firstOperand;
+const generateAdditionExpression = (allowZero, highestValue) => {
+  const value = random(allowZero ? 0 : 2, highestValue);
+  const firstOperand = random(allowZero ? 0 : 1, value - (allowZero ? 0 : 1));
+  const secondOperand = value - firstOperand;
 
   return {
-    result,
+    value,
     firstOperand,
     secondOperand
   };
@@ -47,91 +72,123 @@ const StyledScore = styled.ol`
 
 const Score = styled.li`
   height: 30px;
-  min-width: 20px;
   width: 100%;
   display: inline-block;
   background: ${props => (props.solved ? "orange" : "#eee")};
   flex: 1;
-
-  &:first-child {
-    border-radius: 5px 0 0 5px;
-  }
-
-  &:last-child {
-    border-radius: 0 5px 5px 0;
-  }
 `;
 
 const ScoreBoard = ({ score }) => {
   const scores = score.map((solved, position) => <Score solved={solved} />);
-
   return <StyledScore>{scores}</StyledScore>;
 };
-
-const OngoingGame = () => {};
 
 class Game extends Component {
   constructor(props) {
     super(props);
-    const expression = generateAdditionExpression(2, 10);
 
     this.state = {
-      expressions: [expression],
+      expressions: [],
+      results: [],
       score: range(ROUNDS_COUNT).map(() => false),
-      round: 0
+      round: 0,
+      level: 0
     };
   }
 
-  isGameCompleted = () => this.state.score.every(round => round === true);
+  isLevelCompleted = score => score.every(round => round === true);
+  isGameCompleted = (score, level) =>
+    this.isLevelCompleted(score) && level === LEVELS.length - 1;
+
+  componentWillMount = () => {
+    this.resetExpression();
+  };
 
   resetGame = () => {
-    const expression = generateAdditionExpression(2, 10);
-    this.setState({ expressions: [expression] });
+    this.setState({
+      expressions: [],
+      results: [],
+      score: range(ROUNDS_COUNT).map(() => false),
+      round: 0,
+      level: 0
+    });
+    this.resetExpression();
+  };
+
+  resetExpression = () => {
+    const config = LEVELS[this.state.level];
+    const expression = generateAdditionExpression(
+      LEVELS[this.state.level].allowZero,
+      LEVELS[this.state.level].maxValue
+    );
+    const results = shuffle(
+      [expression.value].concat(
+        slice(
+          shuffle(
+            range(1, LEVELS[this.state.level].maxValue + 1).filter(
+              value => value !== expression.value
+            )
+          ),
+          0,
+          MIN_RESULTS_COUNT - 1
+        )
+      )
+    );
+    this.setState({ expressions: [expression], results });
   };
 
   resolveRound = () => {
-    const isGameCompleted = this.isGameCompleted();
+    let newScore = this.state.score.map(
+      (result, round) => (round === this.state.round ? true : result)
+    );
+    let newLevel = this.state.level;
+    let newRound = this.state.round + 1;
+
+    const isLevelCompleted = this.isLevelCompleted(newScore);
+    const isGameCompleted = this.isGameCompleted(newScore, this.state.level);
+
+    if (isLevelCompleted && !isGameCompleted) {
+      newScore = newScore.map(round => false);
+      newLevel += 1;
+      newRound = 0;
+    }
+
     this.setState({
-      score: this.state.score.map(
-        (result, round) => (round === this.state.round ? true : result)
-      ),
-      round: this.state.round + 1
+      score: newScore,
+      level: newLevel,
+      round: newRound
     });
     if (!isGameCompleted) {
-      setTimeout(this.resetGame, 1200);
+      setTimeout(this.resetExpression, TIMEOUT);
     }
   };
 
   render() {
     const expressions = this.state.expressions.map((expression, position) => (
       <Expression
-        value={expression.result}
+        expression={expression}
+        value={expression.value}
         key={`${expression.firstOperand}-${
           expression.secondOperand
         }-${position}`}
         resolveRound={this.resolveRound}
-      >
-        {expression.firstOperand} + {expression.secondOperand}
-      </Expression>
+        showIcons={LEVELS[this.state.level].showIcons}
+        showValue={LEVELS[this.state.level].showValue}
+      />
     ));
-    return this.isGameCompleted() ? (
-      <WellDone />
+
+    const results = this.state.results.map(result => <Result value={result} />);
+
+    return this.isGameCompleted(this.state.score, this.state.level) ? (
+      <WellDone onReset={this.resetGame} />
     ) : (
       <Board>
-        <TargetSection>{expressions}</TargetSection>
-        <ResultSection>
-          <Result value={6} />
-          <Result value={7} />
-          <Result value={8} />
-          <Result value={9} />
-          <Result value={5} />
-          <Result value={4} />
-          <Result value={2} />
-          <Result value={3} />
-          <Result value={10} />
-        </ResultSection>
+        <TargetSection className="expressions-section">
+          {expressions}
+        </TargetSection>
+        <ResultSection className="results-section">{results}</ResultSection>
         <CustomDragLayer snapToGrid={false} />
-        <ScoreBoard score={this.state.score} />
+        <ScoreBoard score={this.state.score} className="progress-section" />
       </Board>
     );
   }

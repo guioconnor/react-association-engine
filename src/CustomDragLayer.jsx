@@ -1,10 +1,8 @@
-import React, { Component } from "react";
-import PropTypes from "prop-types";
+import React from "react";
 import { DragLayer } from "react-dnd";
 import { get } from "lodash";
 
-import ItemTypes from "./itemTypes";
-import Card from "./Card";
+// import ItemTypes from "./itemTypes";
 
 const layerStyles = {
   position: "fixed",

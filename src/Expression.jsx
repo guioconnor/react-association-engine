@@ -1,7 +1,68 @@
 import React, { Component } from "react";
 import { DropTarget } from "react-dnd";
+import { range } from "lodash";
+import styled from "styled-components";
+
 import itemTypes from "./itemTypes";
-import Card from "./Card";
+
+const StyledExpression = styled.div`
+  font-size: 50px;
+  text-align: center;
+  padding: 15px;
+`;
+
+const StyledIcon = styled.span`
+  font-size: 30px;
+  padding: 2px;
+`;
+
+const StyledIcons = styled.span`
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  line-height: 30px;
+`;
+
+const Value = styled.span`
+  position: absolute;
+  text-shadow: 1px 1px 2px black;
+  color #333;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  font-weight: bold;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 70px;
+  opacity: 0.8;
+`;
+
+const Icons = ({ value }) => (
+  <StyledIcons>
+    {value < 10 && range(value).map(() => <StyledIcon>👅</StyledIcon>)}
+  </StyledIcons>
+);
+
+const StyledOperand = styled.span`
+  position: relative
+  height: 115px;
+  width: 115px;
+  display: inline-block;
+  background: #eee;
+  border-radius: 5px;
+  vertical-align: middle;
+  `;
+
+const Operand = ({ value, showIcons = false, showValue = true }) => (
+  <StyledOperand>
+    {showIcons && <Icons value={value} />}
+    {showValue && <Value>{value}</Value>}
+  </StyledOperand>
+);
 
 class Expression extends Component {
   constructor(props) {
@@ -13,21 +74,31 @@ class Expression extends Component {
   }
 
   render() {
-    const { children, value, connectDropTarget, isOver, canDrop } = this.props;
+    const { expression, connectDropTarget, isOver, canDrop } = this.props;
     const isActive = canDrop && isOver;
     return connectDropTarget(
       <div>
-        <Card
+        <StyledExpression
           style={{
             background: this.state.found
               ? "#ccffcc"
               : this.state.tried ? "#ffcccc" : isActive ? "#ddc" : "#ccc"
           }}
         >
-          {children}
+          <Operand
+            value={expression.firstOperand}
+            showIcons={this.props.showIcons}
+            showValue={this.props.showValue}
+          />{" "}
+          +{" "}
+          <Operand
+            value={expression.secondOperand}
+            showIcons={this.props.showIcons}
+            showValue={this.props.showValue}
+          />
           {` = `}
-          {this.state.found && `${value}`}
-        </Card>
+          {this.state.found && <Operand value={expression.value} />}
+        </StyledExpression>
       </div>
     );
   }

@@ -1,7 +1,18 @@
 import React, { Component } from "react";
 import { DragSource } from "react-dnd";
+import styled from "styled-components";
 import itemTypes from "./itemTypes";
-import Card from "./Card";
+
+const Card = styled.div`
+  border-radius: 5px;
+  background: #ccc;
+  padding: 15px;
+  min-width: 30px;
+  font-size: 30px;
+  margin: 5px;
+  text-align: center;
+  flex: 1;
+`;
 
 class Result extends Component {
   render() {
