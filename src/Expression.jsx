@@ -12,7 +12,7 @@ const StyledExpression = styled.div`
 `;
 
 const StyledIcon = styled.span`
-  font-size: 30px;
+  font-size: 26px;
   padding: 2px;
 `;
 
