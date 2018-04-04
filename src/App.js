@@ -51,8 +51,15 @@ const ResultSection = styled.div`
   flex-wrap: wrap;
 `;
 
-const generateAdditionExpression = (allowZero, highestValue) => {
-  const value = random(allowZero ? 0 : 2, highestValue);
+const generateAdditionExpression = (
+  allowZero,
+  highestValue,
+  exeptions = []
+) => {
+  let value;
+  do {
+    value = random(allowZero ? 0 : 2, highestValue);
+  } while (exeptions.includes(value));
   const firstOperand = random(allowZero ? 0 : 1, value - (allowZero ? 0 : 1));
   const secondOperand = value - firstOperand;
 
@@ -116,10 +123,10 @@ class Game extends Component {
   };
 
   resetExpression = () => {
-    const config = LEVELS[this.state.level];
     const expression = generateAdditionExpression(
       LEVELS[this.state.level].allowZero,
-      LEVELS[this.state.level].maxValue
+      LEVELS[this.state.level].maxValue,
+      this.state.expressions.map(expression => expression.value)
     );
     const results = shuffle(
       [expression.value].concat(
