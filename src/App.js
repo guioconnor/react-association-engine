@@ -112,14 +112,18 @@ class Game extends Component {
   };
 
   resetGame = () => {
-    this.setState({
-      expressions: [],
-      results: [],
-      score: range(ROUNDS_COUNT).map(() => false),
-      round: 0,
-      level: 0
-    });
-    this.resetExpression();
+    this.setState(
+      {
+        expressions: [],
+        results: [],
+        score: range(ROUNDS_COUNT).map(() => false),
+        round: 0,
+        level: 0
+      },
+      () => {
+        this.resetExpression();
+      }
+    );
   };
 
   resetExpression = () => {
