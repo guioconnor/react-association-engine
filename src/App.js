@@ -38,6 +38,25 @@ const LEVELS = [
     maxValue: 10
   }
 ];
+const ICONS = [
+  "♥️",
+  "👅",
+  "🔥",
+  "🐰",
+  "🍎",
+  "🍌",
+  "🍐",
+  "🚂",
+  "🐱",
+  "🐵",
+  "🐶",
+  "🐷",
+  "🐹",
+  "🦒",
+  "🦒",
+  "🥑",
+  "🥦"
+];
 
 const TargetSection = styled.div`
   display: flex;
@@ -62,12 +81,9 @@ const generateAdditionExpression = (
   } while (exeptions.includes(value));
   const firstOperand = random(allowZero ? 0 : 1, value - (allowZero ? 0 : 1));
   const secondOperand = value - firstOperand;
+  const icon = ICONS[random(0, ICONS.length - 1)];
 
-  return {
-    value,
-    firstOperand,
-    secondOperand
-  };
+  return { value, firstOperand, secondOperand, icon };
 };
 
 const StyledScore = styled.ol`

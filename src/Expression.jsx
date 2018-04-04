@@ -12,8 +12,10 @@ const StyledExpression = styled.div`
 `;
 
 const StyledIcon = styled.span`
-  font-size: 26px;
-  padding: 2px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 30px;
 `;
 
 const StyledIcons = styled.span`
@@ -23,6 +25,9 @@ const StyledIcons = styled.span`
   right: 0;
   bottom: 0;
   line-height: 30px;
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  grid-template-rows: 1fr 1fr 1fr;
 `;
 
 const Value = styled.span`
@@ -41,9 +46,9 @@ const Value = styled.span`
   opacity: 0.8;
 `;
 
-const Icons = ({ value }) => (
+const Icons = ({ value, icon }) => (
   <StyledIcons>
-    {value < 10 && range(value).map(() => <StyledIcon>👅</StyledIcon>)}
+    {value < 10 && range(value).map(() => <StyledIcon>{icon}</StyledIcon>)}
   </StyledIcons>
 );
 
@@ -57,9 +62,9 @@ const StyledOperand = styled.span`
   vertical-align: middle;
   `;
 
-const Operand = ({ value, showIcons = false, showValue = true }) => (
+const Operand = ({ value, showIcons = false, showValue = true, icon }) => (
   <StyledOperand>
-    {showIcons && <Icons value={value} />}
+    {showIcons && <Icons value={value} icon={icon} />}
     {showValue && <Value>{value}</Value>}
   </StyledOperand>
 );
@@ -89,12 +94,14 @@ class Expression extends Component {
             value={expression.firstOperand}
             showIcons={this.props.showIcons}
             showValue={this.props.showValue}
+            icon={expression.icon}
           />{" "}
           +{" "}
           <Operand
             value={expression.secondOperand}
             showIcons={this.props.showIcons}
             showValue={this.props.showValue}
+            icon={expression.icon}
           />
           {` = `}
           {this.state.found && <Operand value={expression.value} />}
