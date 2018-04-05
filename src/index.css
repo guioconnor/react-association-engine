@@ -146,6 +146,12 @@ table {
 
 /* End of reset */
 
+@media (max-width: 480px) {
+  body {
+    /* background: tomato; */
+  }
+}
+
 html,
 body,
 #root,
@@ -156,7 +162,8 @@ body,
 body {
   margin: 0;
   padding: 0;
-  font-family: sans-serif;
+  font-family: "Quicksand", sans-serif;
+  font-weight: bold;
   user-select: none;
 }
 
@@ -167,6 +174,10 @@ body {
 }
 
 .expressions-section {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  min-width: 200px;
 }
 
 .results-section {

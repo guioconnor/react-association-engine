@@ -2,7 +2,7 @@ import React from "react";
 import styled from "styled-components";
 
 const StyledWellDone = styled.div`
-  font-size: 36px;
+  font-size: 8vw;
   text-align: center;
 `;
 
@@ -13,9 +13,9 @@ const Text = styled.div`
 const Button = styled.button`
   border: none;
   background: #ccc;
-  font-size: 28px;
+  font-size: 5vw;
   padding: 10px 30px;
-  border-radius: 5px;
+  border-radius: 1vw;
 `;
 
 export default ({ onReset }) => (

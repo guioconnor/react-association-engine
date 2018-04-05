@@ -4,11 +4,11 @@ import styled from "styled-components";
 import itemTypes from "./itemTypes";
 
 const Card = styled.div`
-  border-radius: 5px;
+  border-radius: 1vw;
   background: #ccc;
-  padding: 15px;
-  min-width: 30px;
-  font-size: 30px;
+  line-height: 10vw;
+  min-width: 10vw;
+  font-size: 5.5vw;
   margin: 5px;
   text-align: center;
   flex: 1;

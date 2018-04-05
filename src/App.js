@@ -58,11 +58,7 @@ const ICONS = [
   "🥦"
 ];
 
-const TargetSection = styled.div`
-  display: flex;
-  flex-direction: column;
-  min-width: 200px;
-`;
+const TargetSection = styled.div``;
 
 const ResultSection = styled.div`
   display: flex;

@@ -32,12 +32,12 @@ function getItemStyles(props) {
 }
 
 const boxStyle = {
-  borderRadius: "5px",
-  background: "#ccc",
+  borderRadius: "1vw",
+  background: "Lavender",
   display: "inline-block",
   padding: "15px 30px 0 30px",
-  fontSize: "30px",
-  height: "50px",
+  fontSize: "5.5vw",
+  lineHeight: "10vw",
   opacity: ".8",
   lineHeight: "1"
 };
