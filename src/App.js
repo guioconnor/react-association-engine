@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import styled from "styled-components";
 import { random, range, shuffle, slice } from "lodash";
+import NoSleep from "nosleep.js";
 
 import Result from "./Result";
 import Expression from "./Expression";
@@ -105,6 +106,7 @@ const ScoreBoard = ({ score }) => {
 class Game extends Component {
   constructor(props) {
     super(props);
+    this.noSleep = new NoSleep();
 
     this.state = {
       expressions: [],
@@ -121,6 +123,13 @@ class Game extends Component {
 
   componentWillMount = () => {
     this.resetExpression();
+  };
+  componentWillUnmount = () => {
+    this.noSleep.disable();
+  };
+
+  enableNoSleep = () => {
+    this.noSleep.enable();
   };
 
   resetGame = () => {
@@ -205,7 +214,7 @@ class Game extends Component {
     return this.isGameCompleted(this.state.score, this.state.level) ? (
       <WellDone onReset={this.resetGame} />
     ) : (
-      <Board>
+      <Board onClick={this.enableNoSleep}>
         <TargetSection className="expressions-section">
           {expressions}
         </TargetSection>
