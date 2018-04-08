@@ -169,8 +169,8 @@ body {
 
 .board {
   display: grid;
-  grid-template-rows: 1fr;
-  grid-template-rows: 1fr 90px 30px;
+  grid-template-rows: 1fr 10vw 30px;
+  grid-row-gap: 1vw;
 }
 
 .expressions-section {
