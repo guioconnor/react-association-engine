@@ -38,8 +38,7 @@ const boxStyle = {
   padding: "15px 30px 0 30px",
   fontSize: "5.5vw",
   lineHeight: "10vw",
-  opacity: ".8",
-  lineHeight: "1"
+  opacity: ".8"
 };
 
 const CustomElement = props => {

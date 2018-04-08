@@ -1,63 +1,24 @@
 import React, { Component } from "react";
 import styled from "styled-components";
-import { random, range, shuffle, slice } from "lodash";
+import { range, shuffle, slice } from "lodash";
 import NoSleep from "nosleep.js";
 
-import Result from "./Result";
-import Expression from "./Expression";
-import Board from "./Board";
-import CustomDragLayer from "./CustomDragLayer";
-import WellDone from "./WellDone";
+import {
+  ROUNDS_COUNT,
+  TIMEOUT,
+  MIN_RESULTS_COUNT,
+  LEVELS,
+  ICONS
+} from "./config";
 
-/** Game constants */
-const ROUNDS_COUNT = 12;
-const TIMEOUT = 1200;
-const MIN_RESULTS_COUNT = 6;
-const LEVELS = [
-  {
-    showIcons: true,
-    showValue: false,
-    allowZero: false,
-    maxValue: 10
-  },
-  {
-    showIcons: true,
-    showValue: true,
-    allowZero: false,
-    maxValue: 10
-  },
-  {
-    showIcons: true,
-    showValue: true,
-    allowZero: true,
-    maxValue: 10
-  },
-  {
-    showIcons: false,
-    showValue: true,
-    allowZero: true,
-    maxValue: 10
-  }
-];
-const ICONS = [
-  "♥️",
-  "👅",
-  "🔥",
-  "🐰",
-  "🍎",
-  "🍌",
-  "🍐",
-  "🚂",
-  "🐱",
-  "🐵",
-  "🐶",
-  "🐷",
-  "🐹",
-  "🦒",
-  "🦒",
-  "🥑",
-  "🥦"
-];
+import Result from "./components/Result";
+import Expression from "./components/Expression";
+import Board from "./components/Board";
+import CustomDragLayer from "./components/CustomDragLayer";
+import WellDone from "./components/WellDone";
+import ScoreBoard from "./components/ScoreBoard";
+
+import generateAdditionExpression from "./lib/additions";
 
 const TargetSection = styled.div``;
 
@@ -66,42 +27,6 @@ const ResultSection = styled.div`
   justify-content: center;
   flex-wrap: wrap;
 `;
-
-const generateAdditionExpression = (
-  allowZero,
-  highestValue,
-  exeptions = []
-) => {
-  let value;
-  do {
-    value = random(allowZero ? 0 : 2, highestValue);
-  } while (exeptions.includes(value));
-  const firstOperand = random(allowZero ? 0 : 1, value - (allowZero ? 0 : 1));
-  const secondOperand = value - firstOperand;
-  const icon = ICONS[random(0, ICONS.length - 1)];
-
-  return { value, firstOperand, secondOperand, icon };
-};
-
-const StyledScore = styled.ol`
-  display: flex;
-  padding: 0;
-  list-style-type: none;
-  justify-content: center;
-`;
-
-const Score = styled.li`
-  height: 30px;
-  width: 100%;
-  display: inline-block;
-  background: ${props => (props.solved ? "orange" : "#eee")};
-  flex: 1;
-`;
-
-const ScoreBoard = ({ score }) => {
-  const scores = score.map((solved, position) => <Score solved={solved} />);
-  return <StyledScore>{scores}</StyledScore>;
-};
 
 class Game extends Component {
   constructor(props) {
@@ -151,7 +76,8 @@ class Game extends Component {
     const expression = generateAdditionExpression(
       LEVELS[this.state.level].allowZero,
       LEVELS[this.state.level].maxValue,
-      this.state.expressions.map(expression => expression.value)
+      this.state.expressions.map(expression => expression.value),
+      ICONS
     );
     const results = shuffle(
       [expression.value].concat(
