@@ -17,6 +17,7 @@ import Board from "./components/Board";
 import CustomDragLayer from "./components/CustomDragLayer";
 import WellDone from "./components/WellDone";
 import ScoreBoard from "./components/ScoreBoard";
+// import IconsList from "./components/IconsList";
 
 import generateAdditionExpression from "./lib/additions";
 
@@ -147,6 +148,7 @@ class Game extends Component {
         <ResultSection className="results-section">{results}</ResultSection>
         <CustomDragLayer snapToGrid={false} />
         <ScoreBoard score={this.state.score} className="progress-section" />
+        {/* <IconsList icons={ICONS} /> */}
       </Board>
     );
   }
