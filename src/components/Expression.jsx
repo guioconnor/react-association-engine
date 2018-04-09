@@ -33,18 +33,20 @@ class Expression extends Component {
             value={expression.firstOperand}
             showIcons={this.props.showIcons}
             showValue={this.state.firstOperandSolved}
+            solved={this.state.firstOperandSolved}
             icon={expression.icon}
             onSolve={this.onSolveOperand("firstOperandSolved")}
-            canDrop={!this.state.firstOperandSolved}
+            canDropByTurn={!this.state.firstOperandSolved}
           />{" "}
           +{" "}
           <Operand
             value={expression.secondOperand}
             showIcons={this.state.firstOperandSolved}
             showValue={this.state.secondOperandSolved}
+            solved={this.state.secondOperandSolved}
             icon={expression.icon}
             onSolve={this.onSolveOperand("secondOperandSolved")}
-            canDrop={
+            canDropByTurn={
               this.state.firstOperandSolved && !this.state.secondOperandSolved
             }
           />
@@ -53,9 +55,10 @@ class Expression extends Component {
             value={expression.value}
             showIcons={this.state.expressionSolved}
             showValue={this.state.expressionSolved}
+            solved={this.state.expressionSolved}
             icon={expression.icon}
             onSolve={this.onSolveOperand("expressionSolved")}
-            canDrop={
+            canDropByTurn={
               this.state.secondOperandSolved && !this.state.expressionSolved
             }
           />

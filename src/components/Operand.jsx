@@ -23,11 +23,20 @@ const Operand = ({
   showIcons = false,
   showValue = true,
   icon,
-  connectDropTarget
+  solved,
+  connectDropTarget,
+  canDrop,
+  canDropByTurn,
+  isOver
 }) =>
   connectDropTarget(
     <span>
-      <StyledOperand>
+      <StyledOperand
+        style={{
+          opacity: canDropByTurn || solved ? 1 : 0.3,
+          background: solved || !canDropByTurn ? "DarkSeaGreen" : "tomato"
+        }}
+      >
         {showIcons && <IconsBox value={value} icon={icon} />}
         {showValue && <ValueBox>{value}</ValueBox>}
       </StyledOperand>
@@ -40,7 +49,7 @@ const operandTarget = {
     props.onSolve(item.value === props.value);
   },
   canDrop(props, monitor) {
-    return get(props, "canDrop", true);
+    return get(props, "canDropByTurn", true);
   }
 };
 

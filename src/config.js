@@ -29,6 +29,7 @@ export const LEVELS = [
   }
 ];
 export const ICONS = [
+  "💀",
   "♥️",
   "👅",
   "🔥",
