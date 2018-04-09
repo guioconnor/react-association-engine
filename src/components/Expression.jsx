@@ -1,9 +1,7 @@
 import React, { Component } from "react";
-import { DropTarget } from "react-dnd";
 import styled from "styled-components";
 
 import Operand from "./Operand";
-import itemTypes from "./itemTypes";
 
 const StyledExpression = styled.div`
   font-size: 12vw;
@@ -15,74 +13,56 @@ class Expression extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      found: false,
-      tried: false
+      firstOperandSolved: false,
+      secondOperandSolved: false,
+      expressionSolved: false
     };
   }
 
+  onSolveOperand = operand => isSolved => {
+    !this.state[operand] && this.setState({ [operand]: isSolved });
+    this.state.expressionSolved && this.props.resolveRound();
+  };
+
   render() {
-    const { expression, connectDropTarget, isOver, canDrop } = this.props;
-    const isActive = canDrop && isOver;
-    return connectDropTarget(
+    const { expression } = this.props;
+    return (
       <div>
-        <StyledExpression
-          style={{
-            background: this.state.found
-              ? "DarkSeaGreen"
-              : this.state.tried
-                ? "tomato"
-                : isActive ? "SlateBlue" : "lavender"
-          }}
-        >
+        <StyledExpression>
           <Operand
             value={expression.firstOperand}
             showIcons={this.props.showIcons}
-            showValue={this.props.showValue}
+            showValue={this.state.firstOperandSolved}
             icon={expression.icon}
+            onSolve={this.onSolveOperand("firstOperandSolved")}
+            canDrop={!this.state.firstOperandSolved}
           />{" "}
           +{" "}
           <Operand
             value={expression.secondOperand}
-            showIcons={this.props.showIcons}
-            showValue={this.props.showValue}
+            showIcons={this.state.firstOperandSolved}
+            showValue={this.state.secondOperandSolved}
             icon={expression.icon}
+            onSolve={this.onSolveOperand("secondOperandSolved")}
+            canDrop={
+              this.state.firstOperandSolved && !this.state.secondOperandSolved
+            }
           />
           {` = `}
-          <Operand value={this.state.found && expression.value} />
+          <Operand
+            value={expression.value}
+            showIcons={this.state.expressionSolved}
+            showValue={this.state.expressionSolved}
+            icon={expression.icon}
+            onSolve={this.onSolveOperand("expressionSolved")}
+            canDrop={
+              this.state.secondOperandSolved && !this.state.expressionSolved
+            }
+          />
         </StyledExpression>
       </div>
     );
   }
 }
 
-const expressionTarget = {
-  drop(props, monitor, component) {
-    const item = monitor.getItem();
-    if (!component.state.found) {
-      const found = item.value === props.value;
-      if (found) {
-        props.resolveRound(found);
-      }
-      component.setState({
-        found: item.value === props.value,
-        tried: true
-      });
-    }
-  }
-};
-
-function expressionCollect(connect, monitor) {
-  return {
-    connectDropTarget: connect.dropTarget(),
-    isOver: monitor.isOver(),
-    canDrop: monitor.canDrop()
-  };
-}
-
-const TargetExpression = DropTarget(
-  itemTypes.RESULT,
-  expressionTarget,
-  expressionCollect
-)(Expression);
-
-export default TargetExpression;
+export default Expression;

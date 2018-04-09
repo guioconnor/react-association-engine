@@ -81,15 +81,20 @@ class Game extends Component {
       ICONS
     );
     const results = shuffle(
-      [expression.value].concat(
+      [
+        expression.value,
+        expression.firstOperand,
+        expression.secondOperand
+      ].concat(
         slice(
           shuffle(
-            range(1, LEVELS[this.state.level].maxValue + 1).filter(
-              value => value !== expression.value
-            )
+            range(1, LEVELS[this.state.level].maxValue + 1)
+              .filter(value => value !== expression.value)
+              .filter(value => value !== expression.firstOperand)
+              .filter(value => value !== expression.secondOperand)
           ),
           0,
-          MIN_RESULTS_COUNT - 1
+          MIN_RESULTS_COUNT - 3
         )
       )
     );
