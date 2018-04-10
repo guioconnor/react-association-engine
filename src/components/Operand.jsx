@@ -30,7 +30,13 @@ const Operand = ({
   isOver
 }) =>
   connectDropTarget(
-    <span>
+    <span
+      style={{
+        height: "21vw",
+        width: "21vw",
+        display: "inline-block"
+      }}
+    >
       <StyledOperand
         style={{
           opacity: canDropByTurn || solved ? 1 : 0.3,
