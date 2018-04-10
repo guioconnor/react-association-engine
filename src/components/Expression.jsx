@@ -31,7 +31,7 @@ class Expression extends Component {
         <StyledExpression>
           <Operand
             value={expression.firstOperand}
-            showIcons={this.props.showIcons}
+            showIcons={true}
             showValue={this.state.firstOperandSolved}
             solved={this.state.firstOperandSolved}
             icon={expression.icon}
