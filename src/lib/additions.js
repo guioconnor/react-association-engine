@@ -4,7 +4,7 @@ const generateAdditionExpression = (
   allowZero,
   highestValue,
   exeptions = [],
-  ICONS
+  icon
 ) => {
   let value;
   do {
@@ -12,7 +12,6 @@ const generateAdditionExpression = (
   } while (exeptions.includes(value));
   const firstOperand = random(allowZero ? 0 : 1, value - (allowZero ? 0 : 1));
   const secondOperand = value - firstOperand;
-  const icon = ICONS[random(0, ICONS.length - 1)];
 
   return { value, firstOperand, secondOperand, icon };
 };

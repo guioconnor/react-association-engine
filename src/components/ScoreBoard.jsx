@@ -8,11 +8,18 @@ const StyledScoreBoard = styled.ol`
   padding: 0;
   list-style-type: none;
   justify-content: center;
+  line-height: ${props => `${100 / props.roundsCount}vw`};
+  font-size: ${props => `${50 / props.roundsCount}vw`};
+  background: #ccc;
 `;
 
-const ScoreBoard = ({ score }) => {
-  const scores = score.map((solved, position) => <Score solved={solved} />);
-  return <StyledScoreBoard>{scores}</StyledScoreBoard>;
+const ScoreBoard = ({ score, icons }) => {
+  const scores = score.map((solved, position) => (
+    <Score solved={solved}>{icons[position]}</Score>
+  ));
+  return (
+    <StyledScoreBoard roundsCount={score.length}>{scores}</StyledScoreBoard>
+  );
 };
 
 export default ScoreBoard;

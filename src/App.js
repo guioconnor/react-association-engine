@@ -59,6 +59,7 @@ class Game extends Component {
       expressions: [],
       results: [],
       score: range(ROUNDS_COUNT).map(() => false),
+      rounds: slice(shuffle(ICONS), 0, ROUNDS_COUNT),
       round: 0,
       level: 0
     };
@@ -99,7 +100,7 @@ class Game extends Component {
       LEVELS[this.state.level].allowZero,
       LEVELS[this.state.level].maxValue,
       this.state.expressions.map(expression => expression.value),
-      ICONS
+      this.state.rounds[this.state.round]
     );
     const results = getRandomOptions(6, this.state.level, expression);
 
@@ -161,7 +162,11 @@ class Game extends Component {
         </TargetSection>{" "}
         <ResultSection className="results-section"> {results} </ResultSection>{" "}
         <CustomDragLayer snapToGrid={false} />{" "}
-        <ScoreBoard score={this.state.score} className="progress-section" />{" "}
+        <ScoreBoard
+          score={this.state.score}
+          icons={this.state.rounds}
+          className="progress-section"
+        />{" "}
         {/* <IconsList icons={ICONS} /> */}{" "}
       </Board>
     );

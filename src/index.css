@@ -169,7 +169,7 @@ body {
 
 .board {
   display: grid;
-  grid-template-rows: 1fr 10vw 30px;
+  grid-template-rows: 1fr 10vw 8.34vw; /* this should be derived from number of orunds*/
   grid-row-gap: 1vw;
 }
 
