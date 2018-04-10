@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import styled from "styled-components";
 import { range, shuffle, slice } from "lodash";
-import NoSleep from "nosleep.js";
+// import NoSleep from "nosleep.js";
 
 import {
   ROUNDS_COUNT,
@@ -29,10 +29,31 @@ const ResultSection = styled.div`
   flex-wrap: wrap;
 `;
 
+const getRandomOptions = (count, level, expression) => {
+  const validValues = [
+    expression.value,
+    expression.firstOperand,
+    expression.secondOperand
+  ];
+  const randomValues = shuffle(
+    range(1, LEVELS[level].maxValue + 1).filter(
+      value => !validValues.includes(value)
+    )
+  );
+
+  return shuffle(
+    slice(
+      Array.from(new Set([...validValues, ...randomValues])),
+      0,
+      MIN_RESULTS_COUNT
+    )
+  );
+};
+
 class Game extends Component {
   constructor(props) {
     super(props);
-    this.noSleep = new NoSleep();
+    // this.noSleep = new NoSleep();
 
     this.state = {
       expressions: [],
@@ -51,11 +72,11 @@ class Game extends Component {
     this.resetExpression();
   };
   componentWillUnmount = () => {
-    this.noSleep.disable();
+    // this.noSleep.disable();
   };
 
   enableNoSleep = () => {
-    this.noSleep.enable();
+    // this.noSleep.enable();
   };
 
   resetGame = () => {
@@ -80,25 +101,12 @@ class Game extends Component {
       this.state.expressions.map(expression => expression.value),
       ICONS
     );
-    const results = shuffle(
-      [
-        expression.value,
-        expression.firstOperand,
-        expression.secondOperand
-      ].concat(
-        slice(
-          shuffle(
-            range(1, LEVELS[this.state.level].maxValue + 1)
-              .filter(value => value !== expression.value)
-              .filter(value => value !== expression.firstOperand)
-              .filter(value => value !== expression.secondOperand)
-          ),
-          0,
-          MIN_RESULTS_COUNT - 3
-        )
-      )
-    );
-    this.setState({ expressions: [expression], results });
+    const results = getRandomOptions(6, this.state.level, expression);
+
+    this.setState({
+      expressions: [expression],
+      results
+    });
   };
 
   resolveRound = () => {
@@ -148,12 +156,13 @@ class Game extends Component {
     ) : (
       <Board onClick={this.enableNoSleep}>
         <TargetSection className="expressions-section">
-          {expressions}
-        </TargetSection>
-        <ResultSection className="results-section">{results}</ResultSection>
-        <CustomDragLayer snapToGrid={false} />
-        <ScoreBoard score={this.state.score} className="progress-section" />
-        {/* <IconsList icons={ICONS} /> */}
+          {" "}
+          {expressions}{" "}
+        </TargetSection>{" "}
+        <ResultSection className="results-section"> {results} </ResultSection>{" "}
+        <CustomDragLayer snapToGrid={false} />{" "}
+        <ScoreBoard score={this.state.score} className="progress-section" />{" "}
+        {/* <IconsList icons={ICONS} /> */}{" "}
       </Board>
     );
   }
