@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import styled from "styled-components";
 
 import Operand from "./Operand";
+import Operator from "./Operator";
 
 const StyledExpression = styled.div`
   font-size: 12vw;
@@ -37,8 +38,8 @@ class Expression extends Component {
             icon={expression.icon}
             onSolve={this.onSolveOperand("firstOperandSolved")}
             canDropByTurn={!this.state.firstOperandSolved}
-          />{" "}
-          +{" "}
+          />
+          <Operator operation={expression.operation} />
           <Operand
             value={expression.secondOperand}
             showIcons={this.state.firstOperandSolved}
@@ -50,7 +51,7 @@ class Expression extends Component {
               this.state.firstOperandSolved && !this.state.secondOperandSolved
             }
           />
-          {` = `}
+          <Operator operation="IDENTITY" />
           <Operand
             value={expression.value}
             showIcons={this.state.expressionSolved}

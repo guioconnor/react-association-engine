@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import styled from "styled-components";
-import { range, shuffle, slice } from "lodash";
+import { range, shuffle, slice, random } from "lodash";
 // import NoSleep from "nosleep.js";
 
 import {
@@ -20,6 +20,7 @@ import ScoreBoard from "./components/ScoreBoard";
 // import IconsList from "./components/IconsList";
 
 import generateAdditionExpression from "./lib/additions";
+import generateSubtractionExpression from "./lib/subtractions";
 
 const TargetSection = styled.div``;
 
@@ -96,10 +97,18 @@ class Game extends Component {
   };
 
   resetExpression = () => {
-    const expression = generateAdditionExpression(
+    const generator =
+      random(1, 2) === 1
+        ? generateAdditionExpression
+        : generateSubtractionExpression;
+
+    const expression = generator(
       LEVELS[this.state.level].allowZero,
       LEVELS[this.state.level].maxValue,
-      this.state.expressions.map(expression => expression.value),
+      [
+        ...this.state.expressions.map(expression => expression.value),
+        ...this.state.expressions.map(expression => expression.firstOperand)
+      ],
       this.state.rounds[this.state.round]
     );
     const results = getRandomOptions(6, this.state.level, expression);
