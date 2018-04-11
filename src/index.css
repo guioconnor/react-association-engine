@@ -169,8 +169,8 @@ body {
 
 .board {
   display: grid;
-  grid-template-rows: 1fr 10vw 8.34vw; /* this should be derived from number of orunds*/
-  grid-row-gap: 1vw;
+  grid-template-rows: 1fr 10vw 12.34vw; /* this should be derived from number of rounds*/
+  grid-row-gap: 3vw;
 }
 
 .expressions-section {

@@ -175,6 +175,7 @@ class Game extends Component {
           score={this.state.score}
           icons={this.state.rounds}
           className="progress-section"
+          round={this.state.round}
         />{" "}
         {/* <IconsList icons={ICONS} /> */}{" "}
       </Board>
