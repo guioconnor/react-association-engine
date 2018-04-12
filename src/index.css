@@ -161,7 +161,7 @@ body,
 
 body {
   margin: 0;
-  padding: 0;
+  padding: 2vw 2vw 5vw 2vw;
   font-family: "Quicksand", sans-serif;
   font-weight: bold;
   user-select: none;
@@ -169,8 +169,8 @@ body {
 
 .board {
   display: grid;
-  grid-template-rows: 1fr 10vw 12.34vw; /* this should be derived from number of rounds*/
-  grid-row-gap: 3vw;
+  grid-template-rows: 1fr 10vw 8.34vw; /* this should be derived from number of rounds*/
+  grid-row-gap: 2vw;
 }
 
 .expressions-section {

@@ -7,7 +7,6 @@ const Bar = styled.div`
   position: relative;
   background: #ccc;
   border-radius: 5px;
-  margin: 2vw;
 `;
 
 const Focus = styled.div`

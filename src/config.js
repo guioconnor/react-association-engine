@@ -1,4 +1,6 @@
 /** Game constants */
+import ifEmoji from "if-emoji";
+
 export const ROUNDS_COUNT = 12;
 export const TIMEOUT = 1200;
 export const MIN_RESULTS_COUNT = 6;
@@ -8,6 +10,7 @@ export const LEVELS = [
     maxValue: 10
   }
 ];
+
 export const ICONS = [
   "💀",
   "♥️",
@@ -23,7 +26,36 @@ export const ICONS = [
   "🐶",
   "🐷",
   "🐹",
-  // "🦒",
-  // "🥑",
-  // "🥦"
-];
+  "🦒",
+  "🥑",
+  "🥦",
+  "🦁",
+  "🐗",
+  "🐧",
+  "🐦",
+  "🐸",
+  "🦎",
+  "🦋",
+  "🐜",
+  "🐛",
+  "🐝",
+  "🌱",
+  "🍄",
+  "🌷",
+  "🌻",
+  "🌙",
+  "☀️",
+  "⭐",
+  "☁️",
+  "☃️",
+  "🍇",
+  "🍉",
+  "🍋",
+  "🍍",
+  "🥥",
+  "🍅",
+  "🍆",
+  "🥕",
+  "🌽",
+  "🧀"
+].filter(ifEmoji);
