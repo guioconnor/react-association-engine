@@ -21,6 +21,9 @@ class Expression extends Component {
   }
 
   onSolveOperand = operand => isSolved => {
+    if (!isSolved) {
+      this.props.onFailedAnswer();
+    }
     !this.state[operand] && this.setState({ [operand]: isSolved });
     this.state.expressionSolved && this.props.resolveRound();
   };

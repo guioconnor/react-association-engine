@@ -111,7 +111,11 @@ class Game extends Component {
       ],
       this.state.rounds[this.state.round]
     );
-    const results = getRandomOptions(6, this.state.level, expression);
+    const results = getRandomOptions(
+      MIN_RESULTS_COUNT,
+      this.state.level,
+      expression
+    );
 
     this.setState({
       expressions: [expression],
@@ -145,6 +149,15 @@ class Game extends Component {
     }
   };
 
+  randomizeAnswers = () => {
+    const results = getRandomOptions(
+      MIN_RESULTS_COUNT,
+      this.state.level,
+      this.state.expressions[0]
+    );
+    this.setState({ results });
+  };
+
   render() {
     const expressions = this.state.expressions.map((expression, position) => (
       <Expression
@@ -156,6 +169,7 @@ class Game extends Component {
         resolveRound={this.resolveRound}
         showIcons={LEVELS[this.state.level].showIcons}
         showValue={LEVELS[this.state.level].showValue}
+        onFailedAnswer={this.randomizeAnswers}
       />
     ));
 
@@ -177,7 +191,7 @@ class Game extends Component {
           className="progress-section"
           round={this.state.round}
         />{" "}
-        {/* <IconsList icons={ICONS} /> */}{" "}
+        {/* <IconsList icons={ICONS} />{" "} */}
       </Board>
     );
   }
