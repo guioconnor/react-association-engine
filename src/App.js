@@ -175,9 +175,7 @@ class Game extends Component {
 
     const results = this.state.results.map(result => <Result value={result} />);
 
-    return this.isGameCompleted(this.state.score, this.state.level) ? (
-      <WellDone onReset={this.resetGame} />
-    ) : (
+    return (
       <Board onClick={this.enableNoSleep}>
         <TargetSection className="expressions-section">
           {" "}
@@ -192,6 +190,9 @@ class Game extends Component {
           round={this.state.round}
         />{" "}
         {/* <IconsList icons={ICONS} />{" "} */}
+        {this.isGameCompleted(this.state.score, this.state.level) && (
+          <WellDone onReset={this.resetGame} />
+        )}
       </Board>
     );
   }
