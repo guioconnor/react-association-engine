@@ -2,8 +2,7 @@ import styled from "styled-components";
 
 const ValueBox = styled.span`
   position: absolute;
-  text-shadow: 1px 1px 2px black;
-  color #333;
+  color #DEE2DF;
   top: 0;
   left: 0;
   right: 0;
@@ -12,7 +11,7 @@ const ValueBox = styled.span`
   justify-content: center;
   align-items: center;
   font-size: 20vw;
-  opacity: 0.8;
+  opacity: 0.9;
 `;
 
 export default ValueBox;

@@ -7,7 +7,7 @@ import ValueBox from "./ValueBox";
 import IconsBox from "./IconsBox";
 import itemTypes from "./itemTypes";
 
-const StyledOperand = styled.span`
+const StyledOperand = styled.div`
   position: relative
   height: 21vw;
   width: 21vw;
@@ -15,7 +15,8 @@ const StyledOperand = styled.span`
   background: #eee;
   border-radius: 1vw;
   vertical-align: middle;
-  box-shadow: 1px 1px 5px rgba(0,0,0,0.1);
+  box-shadow: 0.3vw 0.3vw 1vw rgba(0, 0, 0, 0.1),
+    -0.1vw -0.1vw 0.3vw rgba(0, 0, 0, 0.05);
 `;
 
 const Operand = ({
@@ -39,8 +40,8 @@ const Operand = ({
     >
       <StyledOperand
         style={{
-          opacity: canDropByTurn || solved ? 1 : 0.3,
-          background: solved || !canDropByTurn ? "DarkSeaGreen" : "tomato"
+          opacity: 0.9,
+          background: solved || !canDropByTurn ? "#6d6466" : "#ffb52e"
         }}
       >
         {showIcons && <IconsBox value={value} icon={icon} />}

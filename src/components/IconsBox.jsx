@@ -19,6 +19,7 @@ const StyledIcons = styled.span`
   display: grid;
   grid-template-columns: 1fr 1fr 1fr;
   grid-template-rows: 1fr 1fr 1fr;
+  text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.2), -1px -1px 1px rgba(0, 0, 0, 0.2);
 `;
 
 const IconsBox = ({ value, icon }) => (
