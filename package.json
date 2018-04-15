@@ -21,6 +21,8 @@
     "deploy":
       "npm run-script build && surge ./build react-association-engine.surge.sh",
     "deploy-police":
-      "npm run-script build && surge ./build police-math-game.surge.sh"
+      "npm run-script build && surge ./build police-math-game.surge.sh",
+    "deploy-paleo":
+      "npm run-script build && surge ./build paleo-math-game.surge.sh"
   }
 }

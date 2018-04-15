@@ -34,6 +34,21 @@ export const POLICE_ICONS = [
   "👮🏾‍♂️"
 ].filter(ifEmoji);
 
+export const PALEONTOLOGIST_ICONS = [
+  "🦕",
+  "🦖",
+  "⛏️",
+  "🔬",
+  "⚒️",
+  "🎒",
+  "🗺️",
+  "🖌️",
+  "🏜️",
+  "🛩️",
+  "📚",
+  "📖"
+].filter(ifEmoji);
+
 export const GENERAL_ICONS = [
   "💀",
   "♥️",
@@ -83,4 +98,4 @@ export const GENERAL_ICONS = [
   "🧀"
 ].filter(ifEmoji);
 
-export const ICONS = GENERAL_ICONS;
+export const ICONS = PALEONTOLOGIST_ICONS;
