@@ -11,7 +11,30 @@ export const LEVELS = [
   }
 ];
 
-export const ICONS = [
+export const POLICE_ICONS = [
+  "🚓",
+  "🚔",
+  "🚔",
+  "👮‍♂",
+  "👮‍♀️",
+  "🚨",
+  "👮🏻",
+  "👮🏿",
+  "👮🏽",
+  "👮🏽‍♀️",
+  "👮🏻‍♂️",
+  "👮🏾",
+  "👮🏽‍♂️",
+  "👮🏻‍♀️",
+  "👮🏿‍♂️",
+  "👮🏿‍♀️",
+  "👮🏼",
+  "👮🏾‍♀️",
+  "👮🏼‍♂️",
+  "👮🏾‍♂️"
+].filter(ifEmoji);
+
+export const GENERAL_ICONS = [
   "💀",
   "♥️",
   "👅",
@@ -59,3 +82,5 @@ export const ICONS = [
   "🌽",
   "🧀"
 ].filter(ifEmoji);
+
+export const ICONS = GENERAL_ICONS;
