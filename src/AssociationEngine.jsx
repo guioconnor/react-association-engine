@@ -1,9 +1,9 @@
 import React, { Component } from "react";
+import PropTypes from "prop-types";
 import { range, shuffle, slice } from "lodash";
 
 import { ROUNDS_COUNT, TIMEOUT, LEVELS, ICONS } from "./config";
 
-import Result from "./components/Result";
 import Board from "./components/Board";
 import CustomDragLayer from "./components/CustomDragLayer";
 import WellDone from "./components/WellDone";
@@ -85,39 +85,48 @@ class Game extends Component {
   };
 
   render() {
-    const { Expression } = this.props;
-    const expression = this.state.expressions[this.state.round];
-    const results = this.props
-      .resultsGenerator(this.state.level, expression)
-      .map(result => <Result value={result} />);
+    const { Expression, Result, resultsGenerator } = this.props;
+    const { expressions, icons, round, score, level } = this.state;
+
+    const expression = expressions[round];
+    const results = resultsGenerator(level, expression).map(result => (
+      <Result value={result} />
+    ));
 
     return (
-      <Board onClick={this.enableNoSleep}>
+      <Board>
         <TargetSection className="expressions-section">
           <Expression
             expression={expression}
-            key={this.state.round}
-            icon={this.state.icons[this.state.round]}
+            key={round}
+            icon={icons[round]}
             resolveRound={this.resolveRound}
-            showIcons={LEVELS[this.state.level].showIcons}
-            showValue={LEVELS[this.state.level].showValue}
+            showIcons={LEVELS[level].showIcons}
+            showValue={LEVELS[level].showValue}
             onFailedAnswer={this.randomizeAnswers}
           />
         </TargetSection>
         <ResultSection className="results-section"> {results} </ResultSection>
         <CustomDragLayer snapToGrid={false} />
         <ScoreBoard
-          score={this.state.score}
-          icons={this.state.icons}
+          score={score}
+          icons={icons}
           className="progress-section"
-          round={this.state.round}
+          round={round}
         />
-        {this.isGameCompleted(this.state.score, this.state.level) && (
+        {this.isGameCompleted(score, level) && (
           <WellDone onReset={this.resetGame} />
         )}
       </Board>
     );
   }
 }
+
+Game.propTypes = {
+  Expression: PropTypes.element,
+  Result: PropTypes.element,
+  expressionGenerator: PropTypes.func,
+  resultsGenerator: PropTypes.func
+};
 
 export default Game;

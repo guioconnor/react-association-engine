@@ -2,13 +2,23 @@ import React from "react";
 import { range, shuffle, slice, random } from "lodash";
 
 import Expression from "./components/Expression";
+import Result from "./components/Result";
 import AssociationEngine from "./AssociationEngine";
 import { LEVELS, MIN_RESULTS_COUNT } from "./config";
 
 import generateAdditionExpression from "./lib/additions";
 import generateSubtractionExpression from "./lib/subtractions";
 
-const getRandomOptions = (count, level, expression) => {
+const expressionGenerator = level => {
+  const generator =
+    random(1, 2) === 1
+      ? generateAdditionExpression
+      : generateSubtractionExpression;
+
+  return generator(LEVELS[level].allowZero, LEVELS[level].maxValue);
+};
+
+const resultsGenerator = (level, expression) => {
   const validValues = [
     expression.value,
     expression.firstOperand,
@@ -29,22 +39,10 @@ const getRandomOptions = (count, level, expression) => {
   );
 };
 
-const expressionGenerator = level => {
-  const generator =
-    random(1, 2) === 1
-      ? generateAdditionExpression
-      : generateSubtractionExpression;
-
-  return generator(LEVELS[level].allowZero, LEVELS[level].maxValue);
-};
-
-const resultsGenerator = (level, expression) =>
-  getRandomOptions(MIN_RESULTS_COUNT, level, expression);
-
 const Arithmetic = () => (
   <AssociationEngine
     Expression={Expression}
-    levels={LEVELS}
+    Result={Result}
     expressionGenerator={expressionGenerator}
     resultsGenerator={resultsGenerator}
   />
