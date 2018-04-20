@@ -19,7 +19,7 @@ class Game extends Component {
       expressions: [],
       results: [],
       score: range(ROUNDS_COUNT).map(() => false),
-      rounds: slice(shuffle(ICONS), 0, ROUNDS_COUNT),
+      icons: slice(shuffle(ICONS), 0, ROUNDS_COUNT),
       round: 0,
       level: 0
     };
@@ -53,7 +53,7 @@ class Game extends Component {
     const expression = this.props.expressionGenerator(
       this.state.level,
       this.state.expressions,
-      this.state.rounds[this.state.round]
+      this.state.icons[this.state.round]
     );
     const results = this.props.resultsGenerator(this.state.level, expression);
 
@@ -123,7 +123,7 @@ class Game extends Component {
         <CustomDragLayer snapToGrid={false} />{" "}
         <ScoreBoard
           score={this.state.score}
-          icons={this.state.rounds}
+          icons={this.state.icons}
           className="progress-section"
           round={this.state.round}
         />{" "}
