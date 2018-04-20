@@ -29,7 +29,7 @@ class Expression extends Component {
   };
 
   render() {
-    const { expression } = this.props;
+    const { expression, icon } = this.props;
     return (
       <div>
         <StyledExpression>
@@ -38,7 +38,7 @@ class Expression extends Component {
             showIcons={true}
             showValue={this.state.firstOperandSolved}
             solved={this.state.firstOperandSolved}
-            icon={expression.icon}
+            icon={icon}
             onSolve={this.onSolveOperand("firstOperandSolved")}
             canDropByTurn={!this.state.firstOperandSolved}
           />
@@ -48,7 +48,7 @@ class Expression extends Component {
             showIcons={this.state.firstOperandSolved}
             showValue={this.state.secondOperandSolved}
             solved={this.state.secondOperandSolved}
-            icon={expression.icon}
+            icon={icon}
             onSolve={this.onSolveOperand("secondOperandSolved")}
             canDropByTurn={
               this.state.firstOperandSolved && !this.state.secondOperandSolved
@@ -60,7 +60,7 @@ class Expression extends Component {
             showIcons={this.state.expressionSolved}
             showValue={this.state.expressionSolved}
             solved={this.state.expressionSolved}
-            icon={expression.icon}
+            icon={icon}
             onSolve={this.onSolveOperand("expressionSolved")}
             canDropByTurn={
               this.state.secondOperandSolved && !this.state.expressionSolved

@@ -29,21 +29,13 @@ const getRandomOptions = (count, level, expression) => {
   );
 };
 
-const expressionGenerator = (level, expressions, icon) => {
+const expressionGenerator = level => {
   const generator =
     random(1, 2) === 1
       ? generateAdditionExpression
       : generateSubtractionExpression;
 
-  return generator(
-    LEVELS[level].allowZero,
-    LEVELS[level].maxValue,
-    [
-      ...expressions.map(expression => expression.value),
-      ...expressions.map(expression => expression.firstOperand)
-    ],
-    icon
-  );
+  return generator(LEVELS[level].allowZero, LEVELS[level].maxValue);
 };
 
 const resultsGenerator = (level, expression) =>

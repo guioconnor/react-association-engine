@@ -50,11 +50,7 @@ class Game extends Component {
   };
 
   resetExpression = () => {
-    const expression = this.props.expressionGenerator(
-      this.state.level,
-      this.state.expressions,
-      this.state.icons[this.state.round]
-    );
+    const expression = this.props.expressionGenerator(this.state.level);
     const results = this.props.resultsGenerator(this.state.level, expression);
 
     this.setState({
@@ -79,20 +75,28 @@ class Game extends Component {
       newRound = 0;
     }
 
-    this.setState({
-      score: newScore,
-      level: newLevel,
-      round: newRound
-    });
-    if (!isGameCompleted) {
-      setTimeout(this.resetExpression, TIMEOUT);
-    }
+    this.setState(
+      {
+        score: newScore
+      },
+      () => {
+        if (!isGameCompleted) {
+          setTimeout(() => {
+            this.resetExpression();
+            this.setState({
+              level: newLevel,
+              round: newRound
+            });
+          }, TIMEOUT);
+        }
+      }
+    );
   };
 
   randomizeAnswers = () => {
     const results = this.props.resultsGenerator(
       this.state.level,
-      this.state.expression[0]
+      this.state.expressions[0]
     );
     this.setState({ results });
   };
@@ -104,6 +108,7 @@ class Game extends Component {
         expression={expression}
         key={this.state.round}
         position={position}
+        icon={this.state.icons[this.state.round]}
         resolveRound={this.resolveRound}
         showIcons={LEVELS[this.state.level].showIcons}
         showValue={LEVELS[this.state.level].showValue}

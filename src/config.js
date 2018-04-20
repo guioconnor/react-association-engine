@@ -2,7 +2,7 @@
 import ifEmoji from "if-emoji";
 
 export const ROUNDS_COUNT = 12;
-export const TIMEOUT = 1200;
+export const TIMEOUT = 400;
 export const MIN_RESULTS_COUNT = 6;
 export const LEVELS = [
   {
