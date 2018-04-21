@@ -19,8 +19,13 @@
     "build": "react-scripts build",
     "test": "react-scripts test --env=jsdom",
     "eject": "react-scripts eject",
-    "deploy": "npm run-script build && surge ./build react-association-engine.surge.sh",
-    "deploy-police": "npm run-script build && surge ./build police-math-game.surge.sh",
-    "deploy-paleo": "npm run-script build && surge ./build paleo-math-game.surge.sh"
+    "deploy":
+      "npm run-script build && surge ./build react-association-engine.surge.sh",
+    "deploy-police":
+      "npm run-script build && surge ./build police-math-game.surge.sh",
+    "deploy-paleo":
+      "npm run-script build && surge ./build paleo-math-game.surge.sh",
+    "deploy-counting":
+      "npm run-script build && surge ./build counting-game.surge.sh"
   }
 }
