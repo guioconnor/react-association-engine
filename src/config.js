@@ -45,7 +45,7 @@ export const PALEONTOLOGIST_ICONS = [
   "🖌️",
   "🏜️",
   "🛩️",
-  "📚",
+  "📕",
   "📖"
 ].filter(ifEmoji);
 
