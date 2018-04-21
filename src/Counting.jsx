@@ -1,7 +1,7 @@
 import React from "react";
 import { range, shuffle, slice, random } from "lodash";
 
-import Expression from "./components/ArithmeticExpression";
+import Expression from "./components/CountingExpression";
 import Result from "./components/Result";
 import AssociationEngine from "./AssociationEngine";
 import { LEVELS, MIN_RESULTS_COUNT } from "./config";
