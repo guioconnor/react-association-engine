@@ -15,12 +15,15 @@ class Game extends Component {
   constructor(props) {
     super(props);
 
+    const expressions = range(ROUNDS_COUNT).map(() =>
+      props.expressionGenerator(0)
+    );
+
     this.state = {
-      expressions: range(ROUNDS_COUNT).map(() =>
-        this.props.expressionGenerator(0)
-      ),
+      expressions: expressions,
       score: range(ROUNDS_COUNT).map(() => false),
       icons: slice(shuffle(ICONS), 0, ROUNDS_COUNT),
+      results: props.resultsGenerator(0, expressions[0]),
       round: 0,
       level: 0
     };
@@ -32,11 +35,13 @@ class Game extends Component {
     this.isLevelCompleted(score) && level === LEVELS.length - 1;
 
   resetGame = () => {
+    const expressions = range(ROUNDS_COUNT).map(() =>
+      this.props.expressionGenerator(0)
+    );
+
     this.setState({
-      expressions: range(ROUNDS_COUNT).map(() =>
-        this.props.expressionGenerator(0)
-      ),
-      results: [],
+      expressions: expressions,
+      results: this.props.resultsGenerator(0, expressions[0]),
       score: range(ROUNDS_COUNT).map(() => false),
       round: 0,
       level: 0
@@ -68,7 +73,11 @@ class Game extends Component {
           setTimeout(() => {
             this.setState({
               level: newLevel,
-              round: newRound
+              round: newRound,
+              results: this.props.resultsGenerator(
+                0,
+                this.state.expressions[newRound]
+              )
             });
           }, TIMEOUT);
         }
@@ -85,13 +94,19 @@ class Game extends Component {
   };
 
   render() {
-    const { Expression, Result, resultsGenerator } = this.props;
+    const {
+      Expression,
+      Result,
+      resultsGenerator,
+      randomiseResultsOnError
+    } = this.props;
     const { expressions, icons, round, score, level } = this.state;
 
     const expression = expressions[round];
-    const results = resultsGenerator(level, expression).map(result => (
-      <Result value={result} />
-    ));
+    const results = (randomiseResultsOnError
+      ? resultsGenerator(level, expression)
+      : this.state.results
+    ).map(result => <Result value={result} />);
 
     return (
       <Board>
@@ -123,8 +138,8 @@ class Game extends Component {
 }
 
 Game.propTypes = {
-  Expression: PropTypes.element,
-  Result: PropTypes.element,
+  Expression: PropTypes.func,
+  Result: PropTypes.func,
   expressionGenerator: PropTypes.func,
   resultsGenerator: PropTypes.func
 };
